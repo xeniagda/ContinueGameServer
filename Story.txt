@@ -1,0 +1,4 @@
+Start|You are at the start of this game|Go home>AT_HOME/Die>DEAD
+AT_HOME|U r at home|Go out>OUTSIDE/Die>DEAD
+OUTSIDE|You are outside|Go in>AT_HOME
+DEAD|You are dead|Restart>AT_HOME
