@@ -1,4 +1,14 @@
-Start|You are at the start of this game|Go home>AT_HOME/Die>DEAD
-AT_HOME|U r at home|Go out>OUTSIDE/Die>DEAD
-OUTSIDE|You are outside|Go in>AT_HOME
-DEAD|You are dead|Restart>AT_HOME
+NOTHING|Sorry, this part hasn't been made yet.|Start again>START
+START|Hello, I'm Ashley. Do you want to come over to my house?|Yes>Lem/No>Anyway
+Anyway|You're going to my house anyway|Ok>Lem
+Lem|Okay, lets go. Do you like Daniel Lehmussaari's movies?|Yes>Lem1/No>Arrive
+Lem1|No, seriously, do you like his movies?|No>Arrive
+Arrive|Yeah, neither do I. Anyway, here's my house.|Go inside>Inside
+Inside|Welcome inside! Do you want me to show you around the house?|Yes>ShowAroundLivingRoom/No>ShowAroundAnyway
+ShowAroundAnyway|Well, I'm going to show you around anyway.|Fine.>ShowAroundLivingRoom
+ShowAroundLivingRoom|This is the living room!|Cool>ShowAroundKitchen/Jump out of the window>Escape
+ShowAroundKitchen|This is the kitchen. Nice, isn't it?|Yeah, yeah>NOTHING/Grab a knife>Knife
+Knife|What are you doing?|I'm goin' to stab you if you don't let me out of here.>OneStepCloser|I'm going to make a filet!>Cooking|Oh, nothing.>ShowAroundBedroom
+OneStepCloser|Drop the knife! One step closer and I'll call the cops!|Murder her>Murder/Go one step closer>Closer/Drop the knife>Stabbed
+Stabbed|Ashley grabbed the knife and killed you. The end.|Restart>START
+Escape|You jump out of the window|Run>NOTHING
