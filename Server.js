@@ -1,7 +1,7 @@
-const net = require("net")
-const url = require("url")
-const fs = require("fs")
-const escaper = require("./Tools/escape")
+const net = require("net");
+const url = require("url");
+const fs = require("fs");
+const escaper = require("./Tools/escape");
 
 const PORT = 42069;
 
@@ -85,25 +85,38 @@ var server = net.createServer((socket) => {
 
     socket.on("data", function(chunk) {
         log("Data: " + chunk);
+        var send = "ERR/NOTHING";
+
         const parts = escaper.splitEscape(chunk, "/");
 
         if (parts[0] === "GET") {
             const story_id = parts[1].trim();
             if (Object.keys(STORY).indexOf(story_id) == -1) {
-                socket.end("ERR/NOT_FOUND");
-                return;
+                send = "ERR/NOT_FOUND";
             }
-            const story_part = STORY[story_id];
-            var text = story_part.text;
-            var links = escaper.escapeJoin(story_part.links.map(p => escaper.escapeJoin([p.link, p.story_id], ">")), "&");
-            socket.end(escaper.escapeJoin([text, links], "/"));
+            else {
+                const story_part = STORY[story_id];
+                var text = story_part.text;
+                var links = escaper.escapeJoin(story_part.links.map(p => escaper.escapeJoin([p.link, p.story_id], ">")), "&");
+                send = escaper.escapeJoin([text, links], "/");
+            }
         }
+        log("Seding " + send);
+        socket.write(send + "\n");
     });
     socket.on("close", function(data) {
-        log("Closed. Data: " + data)
+        log("Closed " + socket.remoteAddress + ":" + socket.remotePort + ". Data: " + data)
     });
 });
 
-server.listen(PORT, "localhost");
+var reader = setInterval(() => {
+    var storyFromFile = readStoryFromFile(STORY_FILE);
+    if (JSON.stringify(storyFromFile) !== JSON.stringify(STORY)) {
+        log("Story file changed! Reloading!");
+        STORY = storyFromFile;
+    }
+}, 1000);
+
+server.listen(PORT);
 
 log("Server started");
